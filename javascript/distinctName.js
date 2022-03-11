@@ -1,6 +1,6 @@
-distinctName = function(tweet)
+distinctName = function(tweets)
 {
-var number = tweet.components.number + ‘’,
+var number = tweets.components.number + ‘’,
    seen = []
    result = []
    i = number.length;
