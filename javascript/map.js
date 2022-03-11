@@ -3,7 +3,7 @@ map = function()
 var names = distinctName(this);
 emit({
  names: names,
-followers: this.components.followers
+follower_count: this.components.user.follower_count
 },{
 count: 1
 });
