@@ -1,0 +1,38 @@
+<div>
+  <label class="purple">
+    <input [value]="1" [(ngModel)]="sh" name="sh" type="radio" [checked]="isChecked" /> List
+  </label>
+  <br>
+  <label class="purple">
+    <input [value]="0" [(ngModel)]="sh" name="sh" type="radio" [checked]="!isChecked" /> Add
+  </label>
+
+</div>
+<div *ngIf="sh == 1">
+<div>
+<button class="btn btn-danger">Big fat button to fetch</button>
+</div>
+<div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Source</th>
+        <th scope="col">Text</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tweet of tweets">
+      <th scope="row"></th>
+      <td>{{tweet.source}}</td>
+      <td>{{tweet.text}}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+</div>
+
+<div *ngIf="sh == 0">
+
+
+</div>

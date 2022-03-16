@@ -1,0 +1,6 @@
+{
+  "/Twitter": {
+    "target": "http://localhost:5400",
+    "secure": false
+  }
+}
