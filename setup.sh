@@ -4,6 +4,8 @@ VMSIZE='Standard_B1ls'
 IMG='ubuntults'
 LOCATION='northeurope'
 NSG='mongo-nsg'
+USER=$USERNAME
+
 
 
 az group create --name $GROUP --location northeurope 
@@ -58,6 +60,13 @@ az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 --scripts "curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64\" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose"
+
+az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
+--scripts "runuser -l $USERNAME -c 'sudo usermod -aG docker $USER && newgrp docker'"
+
+az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
+--scripts "runuser -l $USERNAME -c 'sudo chgrp docker /usr/local/bin/docker-compose'"
+
 
 echo "Start docker containers"
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
