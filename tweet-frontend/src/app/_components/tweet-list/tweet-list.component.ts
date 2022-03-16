@@ -35,6 +35,8 @@ export class TweetListComponent implements OnInit {
     console.log('Source', form.value.source);
     console.log('Email', form.value.email);
     console.log('Text', form.value.text);
+
+    console.log(form.get)
   }
 
 }

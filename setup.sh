@@ -22,19 +22,19 @@ az network nsg rule create -n 'ssh' -g $GROUP --nsg-name $NSG --priority 750   \
 --direction Inbound --access Allow --protocol Tcp --description "Allow ssh traffic" --destination-port-ranges '22'
 
 az vm create -g $GROUP -n mongo-config --image $IMG --size Standard_B1ms \
---location $LOCATION --public-ip-address db-ass-mongo-config --generate-ssh-keys --nsg $NSG
+--location $LOCATION --public-ip-address db-ass-mongo-config --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
 az vm create -g $GROUP -n mongo-shard1-1 --image $IMG --size $VMSIZE \
---location $LOCATION --public-ip-address db-ass-mongo-shard1-1 --generate-ssh-keys --nsg $NSG
+--location $LOCATION --public-ip-address db-ass-mongo-shard1-1 --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
 az vm create -g $GROUP -n mongo-shard1-2 --image $IMG --size $VMSIZE \
---location $LOCATION --public-ip-address db-ass-mongo-shard1-2 --generate-ssh-keys --nsg $NSG
+--location $LOCATION --public-ip-address db-ass-mongo-shard1-2 --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
 az vm create -g $GROUP -n mongo-shard2-1 --image $IMG --size $VMSIZE \
---location $LOCATION --public-ip-address db-ass-mongo-shard2-1 --generate-ssh-keys --nsg $NSG
+--location $LOCATION --public-ip-address db-ass-mongo-shard2-1 --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
 az vm create -g $GROUP -n mongo-shard2-2 --image $IMG --size $VMSIZE \
---location $LOCATION --public-ip-address db-ass-mongo-shard2-2 --generate-ssh-keys --nsg $NSG
+--location $LOCATION --public-ip-address db-ass-mongo-shard2-2 --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
 
 az network public-ip update --resource-group $GROUP --name db-ass-mongo-config --dns-name db-ass-mongo-config
@@ -69,6 +69,7 @@ az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 
 ################### Setup shards ##################
 
+echo "Setup shard 1"
 ### Shard 1 ###
 
 az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
@@ -89,6 +90,7 @@ az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript
 az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
 --scripts "@shard-setup-1-1.sh"
 
+echo "Setup shard 1"
 ### Shard 2 ###
 
 az vm run-command invoke -g $GROUP -n mongo-shard2-1 --command-id RunShellScript \
@@ -112,11 +114,11 @@ az vm run-command invoke -g $GROUP -n mongo-shard2-1 --command-id RunShellScript
 ##### Post config ###
 
 
-az vm run-command invoke -g $GROUP -n mongo-shard2-1 --command-id RunShellScript \
---scripts "@shard-setup-1-2.sh"
+#az vm run-command invoke -g $GROUP -n mongo-shard2-1 --command-id RunShellScript \
+#--scripts "@shard-setup-1-2.sh"
 
-az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
---scripts "@shard-setup-2-2.sh"
-
+#az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
+#--scripts "@shard-setup-2-2.sh"
+echo "Start configuration pt2"
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 --scripts "@config-setup-2.sh"
