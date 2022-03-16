@@ -43,7 +43,7 @@ az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 
 
 #--scripts "wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - && echo \"deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse\" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list && apt-get update && sudo apt-get install -y mongodb-org"
-echo "Start docker containers"
+
 #az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 #--scripts "docker run -d --name mongocfg1 --memory=100m --memory-swap=700m --volume \"/mongo_cluster/config1:/data/db\" mongo:5.0.6  mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017"
 
@@ -52,27 +52,30 @@ echo "Start docker containers"
 
 #az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 #--scripts "docker run -d --name mongocfg3 --memory=100m --memory-swap=700m --volume \"/mongo_cluster/config3:/data/db\" mongo:5.0.6  mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017"
+echo "Install docker-compose"
+az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
+--scripts "mkdir /docker && chmod 777 /docker && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/docker-compose.yml -o /docker/docker-compose.yml"
 
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "mkdir /docker && chmod 777 /docker && curl https://raw.githubusercontent.com/raspberrypi/linux/rpi-4.9.y/arch/arm/configs/bcmrpi_defconfig -o bcmrpi_defconfig "
+--scripts "curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64\" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose"
 
-
+echo "Start docker containers"
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "docker-compose -f /home/docker-compose.yml up -d"
+--scripts "docker-compose -f /docker/docker-compose.yml up -d"
 
 
 echo "Start configuration"
 
-echo "'rs.initiate({_id: \\\"mongors1conf\\\",configsvr: true, members: [{ _id : 0, host : \\\"mongocfg1\\\" },{ _id : 1, host : \\\"mongocfg2\\\" }, { _id : 2, host : \\\"mongocfg3\\\" }]})' | mongo"
-echo "'rs.initiate({_id: \"\"mongors1conf\"\",configsvr: true, members: [{ _id : 0, host : \"\"mongocfg1\"\" },{ _id : 1, host : \"\"mongocfg2\"\" }, { _id : 2, host : \"\"mongocfg3\"\" }]})' | mongo"
-
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "docker exec -it mongocfg1 bash -c \"echo 'rs.initiate({_id: \\\"mongors1conf\\\",configsvr: true, members: [{ _id : 0, host : \\\"mongocfg1\\\" },{ _id : 1, host : \\\"mongocfg2\\\" }, { _id : 2, host : \\\"mongocfg3\" }]})' | mongo\""
+--scripts "curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/config-setup.sh -o /docker/config-setup.sh && chmod 777 /docker/config-setup.sh && ./docker/config-setup.sh"
+
+#az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
+#--scripts "docker exec -it mongocfg1 bash -c \"echo 'rs.initiate({_id: \\\"mongors1conf\\\",configsvr: true, members: [{ _id : 0, host : \\\"mongocfg1\\\" },{ _id : 1, host : \\\"mongocfg2\\\" }, { _id : 2, host : \\\"mongocfg3\\\" }]})' | mongo\""
 
 # docker exec -it mongocfg1 bash -c "echo 'rs.initiate({_id: \"mongors1conf\",configsvr: true, members: [{ _id : 0, host : \"mongocfg1\" }, { _id : 1, host : \"mongocfg2\" }]})' | mongo"
 
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "docker run -d --name mongos --memory=100m --memory-swap=600m -p \"27017:27017\" mongo:5.0.6  mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017"
+#az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
+#--scripts "docker run -d --name mongos --memory=100m --memory-swap=600m -p \"27017:27017\" mongo:5.0.6  mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017"
 
 
 
