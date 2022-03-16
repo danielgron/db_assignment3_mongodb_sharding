@@ -76,7 +76,7 @@ az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 echo "Start configuration"
 
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/config-setup.sh -o /docker/config-setup.sh && chmod 777 /docker/config-setup.sh && ./docker/config-setup.sh"
+--scripts "curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/config-setup.sh -o /docker/config-setup.sh && chmod 777 /docker/config-setup.sh && bash /docker/config-setup.sh"
 
 #az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 #--scripts "docker exec -it mongocfg1 bash -c \"echo 'rs.initiate({_id: \\\"mongors1conf\\\",configsvr: true, members: [{ _id : 0, host : \\\"mongocfg1\\\" },{ _id : 1, host : \\\"mongocfg2\\\" }, { _id : 2, host : \\\"mongocfg3\\\" }]})' | mongo\""
