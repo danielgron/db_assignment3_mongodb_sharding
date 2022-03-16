@@ -34,5 +34,27 @@
 
 <div *ngIf="sh == 0">
 
+  <form [formGroup]="tweetForm" (ngSubmit)="onSubmit(tweetForm)">
+    <div>
+      <label>
+        Source:
+        <input formControlName="source" placeholder="Your name">
+      </label>
+    </div>
+    <div>
+      <label>
+        Email:
+        <input formControlName="email" placeholder="Your email">
+      </label>
+    </div>
+    <div>
+      <label>
+        Text:
+        <input formControlName="text" placeholder="Your message">
+      </label>
+    </div>
+    <button type="submit">Send</button>
+  </form>
+
 
 </div>
