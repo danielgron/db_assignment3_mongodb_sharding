@@ -36,7 +36,7 @@ export class TweetListComponent implements OnInit {
     console.log('Email', form.value.email);
     console.log('Text', form.value.text);
 
-    console.log(form.get)
+    this.tweetService.postTweet(new Tweet(form.value)).subscribe(x => console.log(x))
   }
 
 }

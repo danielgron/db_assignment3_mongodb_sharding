@@ -22,4 +22,10 @@ public class TwitterController : ControllerBase
     {
         return await _twitterService.GetAsync();
     }
+
+    [HttpPost(Name = "PostTweet")]
+    public async Task PostAsync(Tweet tweet)
+    {
+        await _twitterService.CreateAsync(tweet);
+    }
 }
