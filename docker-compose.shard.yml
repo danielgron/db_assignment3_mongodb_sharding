@@ -3,13 +3,14 @@ services:
   mongors:
     container_name: mongors
     image: mongo
-    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    command: mongod --shardsvr --replSet ${REPL} --dbpath /data/db --port 27017
     ports:
       - 27017:27017
     expose:
       - "27017"
     environment:
       TERM: xterm
+      REPL: ${REPL}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mongo_cluster/data:/data/db
