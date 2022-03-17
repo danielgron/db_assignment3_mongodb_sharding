@@ -15,4 +15,9 @@ export class TweetService {
     return this.http.get<Tweet[]>('/Twitter');
   }
 
+  postTweet(tweet: Tweet) {
+    console.log("Posting tweet")
+    return this.http.post('/Twitter', tweet);
+  }
+
 }
