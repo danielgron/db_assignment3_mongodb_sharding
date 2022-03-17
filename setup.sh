@@ -45,26 +45,10 @@ az network public-ip update --resource-group $GROUP --name db-ass-mongo-shard2-2
 
 ################# Setup config server ############
 
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "curl -fsSL https://get.docker.com -o get-docker.sh && sh ./get-docker.sh && groupadd docker && usermod -aG docker \$USER && newgrp docker"
-
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo \"\n/swapfile swap swap defaults 0 0\" >> /etc/fstab"
-
-
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "mkdir /docker && mkdir /docker/data && chmod 777 /docker && chmod 777 /docker/data && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/docker-compose.config.yml -o /docker/docker-compose.yml && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/twitter.json -o /docker/data/twitter.json && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/tweets.bson -o /docker/data/twitter.bson"
-
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64\" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose"
-
-az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "runuser -l $USERNAME -c 'sudo usermod -aG docker $USER && newgrp docker && sudo chgrp docker /usr/local/bin/docker-compose' && docker-compose -f /docker/docker-compose.yml up -d"
-
 echo "Start configuration"
 
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "@config-setup-1.sh"
+--scripts "@config-setup-1.sh" --parameters $USER
 
 
 ################### Setup shards ##################
@@ -72,9 +56,11 @@ az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
 echo "Setup shard 1"
 ### Shard 1 ###
 
+echo "Setup base-1-1"
 az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
 --scripts "@shard-setup-base.sh" --parameters $USER mongors1
 
+echo "Setup base-1-2"
 az vm run-command invoke -g $GROUP -n mongo-shard1-2 --command-id RunShellScript \
 --scripts "@shard-setup-base.sh" --parameters $USER mongors1
 
@@ -85,9 +71,11 @@ az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript
 echo "Setup shard 2"
 ### Shard 2 ###
 
+echo "Setup base-2-1"
 az vm run-command invoke -g $GROUP -n mongo-shard2-1 --command-id RunShellScript \
 --scripts "@shard-setup-base.sh" --parameters $USER mongors2
 
+echo "Setup base-2-2"
 az vm run-command invoke -g $GROUP -n mongo-shard2-2 --command-id RunShellScript \
 --scripts "@shard-setup-base.sh" --parameters $USER mongors2
 

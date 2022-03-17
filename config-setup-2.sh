@@ -1,13 +1,13 @@
-echo "config setup 1" >> /log
-docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors1/db-ass-mongo-shard1-1:27017\")' | mongosh --quiet" >> /log
-docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors2/db-ass-mongo-shard2-1:27017\")' | mongosh --quiet" >> /log
+echo "config setup 1"
+docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors1/db-ass-mongo-shard1-1:27017\")' | mongosh --quiet" 
+docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors2/db-ass-mongo-shard2-1:27017\")' | mongosh --quiet" 
 
-docker exec -it mongos1 bash -c "echo 'sh.status()' | mongosh --quiet" >> /log 
+docker exec -it mongos1 bash -c "echo 'sh.status()' | mongosh --quiet" 
 
-echo "**Setup Shards**\n" >> /log
-docker exec mongos1 bash -c "echo 'sh.enableSharding(\"twitter\")' | mongosh --quiet " >> /log
-docker exec mongos1 bash -c "echo 'sh.shardCollection(\"twitter.tweets\", {\"source\" : \"hashed\"})' | mongosh --quiet" >> /log
+echo "**Setup Shards**\n"
+docker exec mongos1 bash -c "echo 'sh.enableSharding(\"twitter\")' | mongosh --quiet"
+docker exec mongos1 bash -c "echo 'sh.shardCollection(\"twitter.tweets\", {\"source\" : \"hashed\"})' | mongosh --quiet"
 
 
-echo "**Import data**\n" >> /log
-docker exec mongos1 bash -c "mongoimport --db twitter --collection tweets --type json /docker/data/twitter.json" >> /log
+echo "**Import data**\n"
+docker exec mongos1 bash -c "mongoimport --db twitter --collection tweets --type json /docker/data/twitter.json"

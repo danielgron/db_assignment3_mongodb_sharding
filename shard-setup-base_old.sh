@@ -1,6 +1,0 @@
-
-curl -fsSL https://get.docker.com -o get-docker.sh && sh ./get-docker.sh && groupadd docker && usermod -aG docker $USER && newgrp docker
-fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo "\n/swapfile swap swap defaults 0 0" >> /etc/fstab
-mkdir /docker && mkdir /docker/data && chmod 777 /docker && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/docker-compose.shard.yml -o /docker/docker-compose.yml && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/twitter.json -o /docker/data/twitter.json && curl https://raw.githubusercontent.com/danielgron/db_assignment3_mongodb_sharding/main/tweets.bson -o /docker/data/twitter.bson
-curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
-runuser -l $USER -c 'sudo usermod -aG docker $USER && newgrp docker && sudo chgrp docker /usr/local/bin/docker-compose' && docker-compose -f /docker/docker-compose.yml up -d
