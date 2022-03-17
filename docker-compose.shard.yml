@@ -3,7 +3,7 @@ services:
   mongors:
     container_name: mongors
     image: mongo
-    command: mongod --shardsvr --replSet ${REPL} --dbpath /data/db --port 27017
+    command: mongod --shardsvr --replSet ${REPL} --dbpath /data/db --port 27017 --bind_ip_all
     ports:
       - 27017:27017
     expose:
