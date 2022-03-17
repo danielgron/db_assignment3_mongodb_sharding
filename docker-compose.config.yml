@@ -3,7 +3,7 @@ services:
   mongocfg1:
     container_name: mongocfg1
     image: mongo
-    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017 --bind_ip_all
     environment:
       TERM: xterm
     expose:
@@ -14,7 +14,7 @@ services:
   mongocfg2:
     container_name: mongocfg2
     image: mongo
-    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017 --bind_ip_all
     environment:
       TERM: xterm
     expose:
@@ -25,7 +25,7 @@ services:
   mongocfg3:
     container_name: mongocfg3
     image: mongo
-    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017 --bind_ip_all
     environment:
       TERM: xterm
     expose:
@@ -40,7 +40,7 @@ services:
       - mongocfg1
       - mongocfg2
       - mongocfg3
-    command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017
+    command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017 --bind_ip_all
     ports:
       - 27017:27017
     expose:
