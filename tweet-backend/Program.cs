@@ -27,6 +27,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<DatabaseSettings>(
     builder.Configuration.GetSection("TwitterDatabase"));
 
+
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<TwitterService>();
 
 var app = builder.Build();

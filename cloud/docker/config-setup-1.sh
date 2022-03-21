@@ -30,7 +30,7 @@ sudo chgrp docker /usr/local/bin/docker-compose
 docker-compose -f /docker/docker-compose.yml up -d
 
 
-docker exec mongocfg1 bash -c "echo 'rs.initiate({_id: \"mongors1conf\",configsvr: true, members: [{ _id : 0, host : \"mongocfg1\" },{ _id : 1, host : \"mongocfg2\" }, { _id : 2, host : \"mongocfg3\" }]})' | mongosh --quiet"
+docker exec mongocfg1 bash -c "echo 'rs.initiate({_id: \"mongors1conf\",configsvr: true, members: [{ _id : 0, host : \"mongocfg1:27017\" },{ _id : 1, host : \"mongocfg2:27017\" }, { _id : 2, host : \"mongocfg3:27017\" }]})' | mongosh --quiet"
 docker exec mongocfg1 bash -c "echo 'rs.status()' | mongosh --quiet"
 
 

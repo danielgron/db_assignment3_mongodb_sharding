@@ -2,6 +2,7 @@ version: '2'
 services:
   mongors:
     container_name: mongors
+    #hostname: ${HOSTNAME}
     image: mongo
     command: mongod --shardsvr --replSet ${REPL} --dbpath /data/db --port 27017 --bind_ip_all
     ports:

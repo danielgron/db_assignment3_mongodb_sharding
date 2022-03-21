@@ -1,5 +1,6 @@
 USER=$1
 REPL=$2
+HOSTNAME=$3
 su $USER
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh

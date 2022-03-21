@@ -1,6 +1,6 @@
 echo "config setup 1"
-docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors1/db-ass-mongo-shard1-1:27017\")' | mongosh --quiet" 
-docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors2/db-ass-mongo-shard2-1:27017\")' | mongosh --quiet" 
+docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors1/mongo-shard1-1:27017\")' | mongosh --quiet" 
+docker exec mongos1 bash -c "echo 'sh.addShard(\"mongors2/mongo-shard2-1:27017\")' | mongosh --quiet" 
 
 docker exec -it mongos1 bash -c "echo 'sh.status()' | mongosh --quiet" 
 
