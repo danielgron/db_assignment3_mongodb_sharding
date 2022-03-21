@@ -23,6 +23,12 @@ public class TwitterController : ControllerBase
         return await _twitterService.GetAsync();
     }
 
+    [HttpGet("FillTwitter")]
+    public async Task<IEnumerable<Tweet>> FillAsync()
+    {
+        return await _twitterService.FillWithTwitter();
+    }
+
     [HttpPost(Name = "PostTweet")]
     public async Task PostAsync(Tweet tweet)
     {

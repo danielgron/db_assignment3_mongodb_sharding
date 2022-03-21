@@ -20,7 +20,8 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "TWITTER": "AAAAAAAAAAAAAAAAAAAAAMFLaQEAAAAAxPwfG0fJzyvg4ErRpI2I5BySEg4%3DxjkkfqVdGUAuCvYq0znbFl28mzPsYGkFQBSYCKzCqixp6zJdGq"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
