@@ -18,12 +18,7 @@ mkdir -p /home/$USER/data/db-cfg2
 mkdir -p /home/$USER/data/db-cfg3
 
 sudo apt update
-sudo apt install ntp
-echo date
-sudo service ntp stop
-sudo ntpd -gq
-sudo service ntp start
-echo date >> /home/$USER/timelog
+sudo apt install git
 
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
