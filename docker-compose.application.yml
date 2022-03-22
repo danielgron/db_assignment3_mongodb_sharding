@@ -8,6 +8,9 @@ services:
     build: 
       context: ./tweet-frontend
       dockerfile: Dockerfile
+    ports:
+      -80:80
+      -443:443
 
   api:
     container_name: 'db-ass-mongo-backend'
@@ -16,3 +19,7 @@ services:
       context: ./tweet-backend
       dockerfile: Dockerfile
     restart: always
+    environment:
+      - TWITTER=${TWITTER}
+
+  

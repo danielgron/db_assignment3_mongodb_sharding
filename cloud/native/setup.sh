@@ -21,6 +21,9 @@ az network nsg rule create -n 'mongo' -g $GROUP --nsg-name $NSG --priority 700  
 az network nsg rule create -n 'ssh' -g $GROUP --nsg-name $NSG --priority 750   \
 --direction Inbound --access Allow --protocol Tcp --description "Allow ssh traffic" --destination-port-ranges '22' --source-address-prefixes "213.32.241.166"
 
+az network nsg rule create -n 'http' -g $GROUP --nsg-name $NSG --priority 770   \
+--direction Inbound --access Allow --protocol Tcp --description "Allow http traffic" --destination-port-ranges '80,443'
+
 az vm create -g $GROUP -n mongo-config --image $IMG --size Standard_B1ms \
 --location $LOCATION --public-ip-address db-ass-mongo-config --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
 
@@ -49,7 +52,7 @@ az network public-ip update --resource-group $GROUP --name db-ass-mongo-shard2-2
 echo "Start configuration"
 
 az vm run-command invoke -g $GROUP -n mongo-config --command-id RunShellScript \
---scripts "@config-setup-1.sh" --parameters $USER
+--scripts "@config-setup-1.sh" --parameters $USER $TWITTER
 
 echo "Setup base-1-1"
 az vm run-command invoke -g $GROUP -n mongo-shard1-1 --command-id RunShellScript \
