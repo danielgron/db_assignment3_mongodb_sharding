@@ -1,7 +1,7 @@
 # https://tariqul-islam-rony.medium.com/angular-learning-part3-7a7c3708b480
 
 # Stage 1: Build an Angular Docker Image
-FROM node as build
+FROM node:16.10 as build
 WORKDIR /app
 COPY package*.json /app/
 RUN npm install
