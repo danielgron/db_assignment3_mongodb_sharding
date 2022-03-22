@@ -1,6 +1,9 @@
 USER=$1
 TWITTER=$2
+
 su $USER
+export TWITTER=$2
+
 echo "config setup 2"
 echo 'sh.addShard("mongors1/mongo-shard1-1:27018")' | mongosh --quiet
 echo 'sh.addShard("mongors2/mongo-shard2-1:27018")' | mongosh --quiet

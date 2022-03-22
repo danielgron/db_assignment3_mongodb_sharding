@@ -22,7 +22,10 @@ az network nsg rule create -n 'ssh' -g $GROUP --nsg-name $NSG --priority 750   \
 --direction Inbound --access Allow --protocol Tcp --description "Allow ssh traffic" --destination-port-ranges '22' --source-address-prefixes "213.32.241.166"
 
 az network nsg rule create -n 'http' -g $GROUP --nsg-name $NSG --priority 770   \
---direction Inbound --access Allow --protocol Tcp --description "Allow http traffic" --destination-port-ranges '80,443'
+--direction Inbound --access Allow --protocol Tcp --description "Allow http traffic" --destination-port-ranges '80'
+
+az network nsg rule create -n 'https' -g $GROUP --nsg-name $NSG --priority 780   \
+--direction Inbound --access Allow --protocol Tcp --description "Allow https traffic" --destination-port-ranges '443'
 
 az vm create -g $GROUP -n mongo-config --image $IMG --size Standard_B1ms \
 --location $LOCATION --public-ip-address db-ass-mongo-config --generate-ssh-keys --nsg $NSG --public-ip-sku Basic
