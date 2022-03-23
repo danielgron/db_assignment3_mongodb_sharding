@@ -8,7 +8,7 @@ http://db-ass-mongo-config.northeurope.cloudapp.azure.com/
 The database is set up across 5 azure virtual machines:
 ![mongo setup](mongo.drawio.png)
 
-A full script to set up database can be found udner cloud/native/setup.sh.
+A full script to run 5 linux machines, install mongodb and set up database can be found udner cloud/native/setup.sh.
 This will require Azure CLI installed and an azure subscription to run.
 
 The servers are on the same virtual network and can therefor communicate.
