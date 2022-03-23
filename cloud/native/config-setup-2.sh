@@ -37,4 +37,4 @@ sudo chgrp docker /usr/local/bin/docker-compose
 sudo mkdir /repo && sudo chgrp docker /repo
 git clone https://github.com/danielgron/db_assignment3_mongodb_sharding.git /repo/
 
-docker-compose -f /repo/docker-compose.application.yml up -d
+TWITTER=$TWITTER docker-compose -f /repo/docker-compose.application.yml up -d
