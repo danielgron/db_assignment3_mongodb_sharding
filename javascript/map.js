@@ -4,8 +4,8 @@ map = function()
  emit
  (
   {
-   names: names,
-   follower_count: this.components.users.follower_count
+   names: this.components.user.screen_name,
+   followers_count: this.components.user.followers_count
   },{
    count: 1
   }
