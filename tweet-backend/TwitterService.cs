@@ -15,6 +15,9 @@ namespace tweet_backend
         {
             apiKey = configuration["TWITTER"];
 
+            if (apiKey == null)
+                Console.WriteLine("API key for Twitter was null");
+
             var mongoClient = new MongoClient(
                 twitterDatabaseSettings.Value.ConnectionString);
 
