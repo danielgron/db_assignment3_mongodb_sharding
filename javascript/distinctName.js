@@ -1,11 +1,11 @@
 distinctName = function(tweets)
 {
-var number = tweets.components.number + ‘’,
+var number = tweets.components.user.screen_name + '',
    seen = []
    result = []
    i = number.length;
 
-while(i - - )
+while(i -- )
 {
 seen[+number[i]]=1;
 }
