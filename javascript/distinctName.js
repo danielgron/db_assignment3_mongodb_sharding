@@ -1,6 +1,6 @@
 distinctName = function(tweets)
 {
-var number = tweets.components.user.screen_name + '',
+var number = twitter.components.tweets.user.screen_name + '',
    seen = []
    result = []
    i = number.length;
