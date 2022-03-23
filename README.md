@@ -5,6 +5,12 @@ Benjamin Curovic & Daniel Grønbjerg
 Frontend available at:
 http://db-ass-mongo-config.northeurope.cloudapp.azure.com/
 
+Add from twitter will use the actual Twitter API and add a 100 tweets that has the word 'banana' in it.
+
+List will list tweets from the database
+
+Add will let you add a tweet to the database, but only source and text.
+
 The database is set up across 5 azure virtual machines:
 ![mongo setup](mongo.drawio.png)
 

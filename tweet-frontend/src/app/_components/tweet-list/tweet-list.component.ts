@@ -26,7 +26,6 @@ export class TweetListComponent implements OnInit {
 
     this.tweetForm = this.fb.group({
       source: new FormControl(''),
-      email: new FormControl(''),
       text: new FormControl('')
     });
   }
@@ -38,7 +37,6 @@ export class TweetListComponent implements OnInit {
   onSubmit(form: FormGroup) {
     console.log('Valid?', form.valid); // true or false
     console.log('Source', form.value.source);
-    console.log('Email', form.value.email);
     console.log('Text', form.value.text);
 
     this.tweetService.postTweet(new Tweet(form.value)).subscribe(x => console.log(x))
