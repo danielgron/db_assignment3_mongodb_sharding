@@ -18,6 +18,9 @@ az network nsg create -n $NSG -g $GROUP
 az network nsg rule create -n 'mongo' -g $GROUP --nsg-name $NSG --priority 700   \
 --direction Inbound --access Allow --protocol Tcp --description "Allow mongo traffic" --destination-port-ranges '27017' --source-address-prefixes "213.32.241.166"
 
+az network nsg rule create -n 'mongo' -g $GROUP --nsg-name $NSG --priority 701   \
+--direction Inbound --access Allow --protocol Tcp --description "Allow mongo traffic" --destination-port-ranges '27017' --source-address-prefixes "178.155.224.128"
+
 az network nsg rule create -n 'ssh' -g $GROUP --nsg-name $NSG --priority 750   \
 --direction Inbound --access Allow --protocol Tcp --description "Allow ssh traffic" --destination-port-ranges '22' --source-address-prefixes "213.32.241.166"
 
