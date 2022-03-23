@@ -1,5 +1,8 @@
 <div>
   <label class="purple">
+    <input [value]="2" [(ngModel)]="sh" name="sh" type="radio" [checked]="!isChecked" /> Fetch From Twitter
+  </label>
+  <label class="purple">
     <input [value]="1" [(ngModel)]="sh" name="sh" type="radio" [checked]="isChecked" /> List
   </label>
   <br>
@@ -10,7 +13,7 @@
 </div>
 <div *ngIf="sh == 1">
 <div>
-<button class="btn btn-danger">Big fat button to fetch</button>
+<button class="btn btn-danger" (click)="getTweets()">Big fat button to fetch tweets</button>
 </div>
 <div>
   <table class="table table-bordered">
@@ -56,5 +59,30 @@
     <button type="submit">Send</button>
   </form>
 
+  <button (click)="addFromTwitter()">Send</button>
 
 </div>
+
+<div *ngIf="sh == 2">
+  <div>
+  <button class="btn btn-danger" (click)="addFromTwitter()">Big fat button to fetch tweets from Twitter</button>
+  </div>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Source</th>
+          <th scope="col">Text</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let tweet of twitterTweets">
+        <th scope="row"></th>
+        <td>{{tweet.source}}</td>
+        <td>{{tweet.text}}</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+  </div>

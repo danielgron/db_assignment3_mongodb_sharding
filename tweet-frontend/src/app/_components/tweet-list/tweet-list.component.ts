@@ -11,6 +11,7 @@ import { TweetService } from 'src/app/_services/tweet.service';
 export class TweetListComponent implements OnInit {
 
   tweets: Tweet[] | undefined
+  twitterTweets: Tweet[] | undefined
   sh: number | undefined
   isChecked: boolean = false
 
@@ -21,13 +22,17 @@ export class TweetListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tweetService.getTweets().subscribe(x => this.tweets = x);
+    this.getTweets();
 
     this.tweetForm = this.fb.group({
       source: new FormControl(''),
       email: new FormControl(''),
       text: new FormControl('')
     });
+  }
+
+  getTweets(){
+    this.tweetService.getTweets().subscribe(x => this.tweets = x);
   }
 
   onSubmit(form: FormGroup) {
@@ -39,4 +44,7 @@ export class TweetListComponent implements OnInit {
     this.tweetService.postTweet(new Tweet(form.value)).subscribe(x => console.log(x))
   }
 
+  addFromTwitter(){
+    this.tweetService.addTweetsFromTwitter().subscribe(x => this.twitterTweets = x)
+  }
 }

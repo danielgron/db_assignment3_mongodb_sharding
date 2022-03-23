@@ -7,6 +7,9 @@ import { Tweet } from '../tweet';
   providedIn: 'root'
 })
 export class TweetService {
+  addTweetsFromTwitter() {
+    return this.http.get<Tweet[]>('/Twitter/FillTwitter');
+  }
 
   constructor(private http: HttpClient) { }
 
