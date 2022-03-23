@@ -1,9 +1,9 @@
 results = db.runCommand
 (
   { 
-    mapReduce: ‘tweets’, 
+    mapReduce: 'tweets', 
     map: map, 
     reduce:reduce, 
-    out: ‘users.follower_count’
+    out: 'user.followers_count'
   }
 )
