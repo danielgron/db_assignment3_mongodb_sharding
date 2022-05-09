@@ -2,8 +2,9 @@
 
 Benjamin Curovic & Daniel Grønbjerg
 
-Frontend available at:
+Frontend was available at:
 http://db-ass-mongo-config.northeurope.cloudapp.azure.com/
+It is no longer deployed as it has now been two months since handin
 
 Add from twitter will use the actual Twitter API and add a 100 tweets that has the word 'banana' in it.
 
